@@ -24,6 +24,5 @@ func (q *stringQueue) enqueue(x string) {
 }
 
 func (q *stringQueue) slice() []string {
-	r := make([]string, 0, len(*q))
-	return append(r, []string(*q)...)
+	return *q
 }
