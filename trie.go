@@ -23,7 +23,7 @@ func (q *stringQueue) enqueue(x string) {
 	*q = append(*q, x)
 }
 
-func (q stringQueue) stringSlice() []string {
+func (q stringQueue) slice() []string {
 	r := make([]string, 0, len(q))
 	return append(r, []string(q)...)
 }

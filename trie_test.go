@@ -8,7 +8,7 @@ func TestStringQueue(t *testing.T) {
 	q.enqueue("bar")
 	q.enqueue("foobar")
 	expected := []string{"foo", "bar", "foobar"}
-	slice := q.stringSlice()
+	slice := q.slice()
 	for i, s := range expected {
 		if slice[i] != s {
 			t.Errorf("expected '%v', but got '%v'", s, slice[i])

@@ -156,7 +156,7 @@ func (t SymbolTable) KeysWithPrefix(prefix string) []string {
 	results := new(stringQueue)
 	x := t.get(t.root, []rune(prefix), 0)
 	t.collect(x, []rune(prefix), results)
-	return results.stringSlice()
+	return results.slice()
 }
 
 func (t SymbolTable) collect(x *sTNode, prefix []rune, results *stringQueue) {
@@ -178,7 +178,7 @@ func (t SymbolTable) collect(x *sTNode, prefix []rune, results *stringQueue) {
 func (t SymbolTable) KeysThatMatch(pattern string) []string {
 	results := new(stringQueue)
 	t.collectWildcard(t.root, []rune(""), []rune(pattern), results)
-	return results.stringSlice()
+	return results.slice()
 }
 
 func (t SymbolTable) collectWildcard(x *sTNode, prefix, pattern []rune, results *stringQueue) {

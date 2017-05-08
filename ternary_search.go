@@ -121,7 +121,7 @@ func (t TernarySearch) LongestPrefixOf(query string) string {
 func (t TernarySearch) Keys() []string {
 	queue := new(stringQueue)
 	t.collect(t.root, []rune(""), queue)
-	return queue.stringSlice()
+	return queue.slice()
 }
 
 // KeysWithPrefix returns all keys starting with given prefix.
@@ -129,13 +129,13 @@ func (t TernarySearch) KeysWithPrefix(prefix string) []string {
 	queue := new(stringQueue)
 	x := t.get(t.root, []rune(prefix), 0)
 	if x == nil {
-		return queue.stringSlice()
+		return queue.slice()
 	}
 	if x.value != nil {
 		queue.enqueue(prefix)
 	}
 	t.collect(x.mid, []rune(prefix), queue)
-	return queue.stringSlice()
+	return queue.slice()
 }
 
 // all keys in subtrie rooted at x with given prefix
@@ -155,7 +155,7 @@ func (t TernarySearch) collect(x *tSNode, prefix []rune, queue *stringQueue) {
 func (t TernarySearch) KeysThatMatch(pattern string) []string {
 	queue := new(stringQueue)
 	t.collectWildcard(t.root, []rune(""), []rune(pattern), 0, queue)
-	return queue.stringSlice()
+	return queue.slice()
 }
 
 func (t TernarySearch) collectWildcard(x *tSNode, prefix, pattern []rune, i int, q *stringQueue) {
