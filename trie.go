@@ -3,19 +3,6 @@ package trie // import "kkn.fi/trie"
 const r = 256 // extended ascii
 
 type (
-	// Interface defines common functions for all trie types.
-	Interface interface {
-		Put(key string, value interface{})
-		Get(key string) interface{}
-		Delete(key string)
-		Contains(key string) bool
-		IsEmpty() bool
-		LongestPrefixOf(query string) string
-		KeysWithPrefix(prefix string) []string
-		KeysThatMatch(pattern string) []string
-		Keys() []string
-		Len() int
-	}
 	// r-way trie node
 	node struct {
 		next     []*node

@@ -17,10 +17,8 @@ type (
 )
 
 // NewTernarySearch returns an empty ternary search trie.
-func NewTernarySearch() Interface {
-	t := &TernarySearch{}
-	var _ Interface = t
-	return t
+func NewTernarySearch() *TernarySearch {
+	return &TernarySearch{}
 }
 
 // Contains return true for an existing key.

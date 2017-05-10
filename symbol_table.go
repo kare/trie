@@ -28,10 +28,8 @@ type (
 )
 
 // NewSymbolTable returns a trie based on symbol table implementation.
-func NewSymbolTable() Interface {
-	t := &SymbolTable{}
-	var _ Interface = t
-	return t
+func NewSymbolTable() *SymbolTable {
+	return &SymbolTable{}
 }
 
 // Put inserts the key-value pair into the trie, overwriting the old
