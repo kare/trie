@@ -22,13 +22,13 @@ func NewTernarySearch() *TernarySearch {
 }
 
 // Contains return true for an existing key.
-func (t TernarySearch) Contains(key string) bool {
+func (t *TernarySearch) Contains(key string) bool {
 	return t.Get(key) != nil
 }
 
 // Get returns value for a key. Get will return nil for an empty key or when key
 // is not found.
-func (t TernarySearch) Get(key string) interface{} {
+func (t *TernarySearch) Get(key string) interface{} {
 	if key == "" {
 		return nil
 	}
@@ -40,7 +40,7 @@ func (t TernarySearch) Get(key string) interface{} {
 }
 
 // return subtrie corresponding to given key
-func (t TernarySearch) get(x *tSNode, key []rune, d int) *tSNode {
+func (t *TernarySearch) get(x *tSNode, key []rune, d int) *tSNode {
 	if len(key) == 0 || x == nil {
 		return nil
 	}
@@ -86,12 +86,12 @@ func (t *TernarySearch) put(x *tSNode, key []rune, val interface{}, d int) *tSNo
 }
 
 // Delete removes the key from the trie if the key is present.
-func (t TernarySearch) Delete(key string) {
+func (t *TernarySearch) Delete(key string) {
 	panic("not implemented!")
 }
 
 // LongestPrefixOf returns longest prefix of argument prefix in trie
-func (t TernarySearch) LongestPrefixOf(query string) string {
+func (t *TernarySearch) LongestPrefixOf(query string) string {
 	if len(query) == 0 {
 		return ""
 	}
@@ -116,14 +116,14 @@ func (t TernarySearch) LongestPrefixOf(query string) string {
 }
 
 // Keys returns all the keys in the trie.
-func (t TernarySearch) Keys() []string {
+func (t *TernarySearch) Keys() []string {
 	queue := new(stringQueue)
 	t.collect(t.root, []rune(""), queue)
 	return queue.slice()
 }
 
 // KeysWithPrefix returns all keys starting with given prefix.
-func (t TernarySearch) KeysWithPrefix(prefix string) []string {
+func (t *TernarySearch) KeysWithPrefix(prefix string) []string {
 	queue := new(stringQueue)
 	x := t.get(t.root, []rune(prefix), 0)
 	if x == nil {
@@ -137,7 +137,7 @@ func (t TernarySearch) KeysWithPrefix(prefix string) []string {
 }
 
 // all keys in subtrie rooted at x with given prefix
-func (t TernarySearch) collect(x *tSNode, prefix []rune, queue *stringQueue) {
+func (t *TernarySearch) collect(x *tSNode, prefix []rune, queue *stringQueue) {
 	if x == nil {
 		return
 	}
@@ -150,13 +150,13 @@ func (t TernarySearch) collect(x *tSNode, prefix []rune, queue *stringQueue) {
 }
 
 // KeysThatMatch returns all keys matching given wildcard pattern
-func (t TernarySearch) KeysThatMatch(pattern string) []string {
+func (t *TernarySearch) KeysThatMatch(pattern string) []string {
 	queue := new(stringQueue)
 	t.collectWildcard(t.root, []rune(""), []rune(pattern), 0, queue)
 	return queue.slice()
 }
 
-func (t TernarySearch) collectWildcard(x *tSNode, prefix, pattern []rune, i int, q *stringQueue) {
+func (t *TernarySearch) collectWildcard(x *tSNode, prefix, pattern []rune, i int, q *stringQueue) {
 	if x == nil {
 		return
 	}
@@ -178,11 +178,11 @@ func (t TernarySearch) collectWildcard(x *tSNode, prefix, pattern []rune, i int,
 }
 
 // Len returns length of trie.
-func (t TernarySearch) Len() int {
+func (t *TernarySearch) Len() int {
 	return t.length
 }
 
 // IsEmpty returns true when trie is empty.
-func (t TernarySearch) IsEmpty() bool {
+func (t *TernarySearch) IsEmpty() bool {
 	return t.length == 0
 }

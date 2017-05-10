@@ -86,19 +86,19 @@ func (t *Trie) Len() int {
 }
 
 // IsEmpty returns true if set is empty.
-func (t Trie) IsEmpty() bool {
+func (t *Trie) IsEmpty() bool {
 	return t.length == 0
 }
 
 // KeysWithPrefix returns all the keys in the set that match prefix.
-func (t Trie) KeysWithPrefix(prefix string) []string {
+func (t *Trie) KeysWithPrefix(prefix string) []string {
 	results := &stringQueue{}
 	x := t.get(t.root, []rune(prefix), 0)
 	t.collect(x, []rune(prefix), results)
 	return results.slice()
 }
 
-func (t Trie) collect(x *node, prefix []rune, results *stringQueue) {
+func (t *Trie) collect(x *node, prefix []rune, results *stringQueue) {
 	if x == nil {
 		return
 	}
@@ -114,13 +114,13 @@ func (t Trie) collect(x *node, prefix []rune, results *stringQueue) {
 
 // KeysThatMatch all of the keys in the set that match pattern,
 // where '.' symbol is treated as a wildcard character.
-func (t Trie) KeysThatMatch(pattern string) []string {
+func (t *Trie) KeysThatMatch(pattern string) []string {
 	results := new(stringQueue)
 	t.collectWildcard(t.root, []rune(""), []rune(pattern), results)
 	return results.slice()
 }
 
-func (t Trie) collectWildcard(x *node, prefix, pattern []rune, results *stringQueue) {
+func (t *Trie) collectWildcard(x *node, prefix, pattern []rune, results *stringQueue) {
 	if x == nil {
 		return
 	}
@@ -146,7 +146,7 @@ func (t Trie) collectWildcard(x *node, prefix, pattern []rune, results *stringQu
 
 // LongestPrefixOf Returns the string in the set that is the
 // longest prefix of query, or an empty string, if no such string.
-func (t Trie) LongestPrefixOf(query string) string {
+func (t *Trie) LongestPrefixOf(query string) string {
 	length := t.longestPrefixOf(t.root, []rune(query), 0, -1)
 	if length == -1 {
 		return ""
@@ -158,7 +158,7 @@ func (t Trie) LongestPrefixOf(query string) string {
 // rooted at x that is a prefix of the query string,
 // assuming the first d character match and we have already
 // found a prefix match of length length
-func (t Trie) longestPrefixOf(x *node, query []rune, d, length int) int {
+func (t *Trie) longestPrefixOf(x *node, query []rune, d, length int) int {
 	if x == nil {
 		return length
 	}
@@ -204,7 +204,7 @@ func (t *Trie) delete(x *node, key []rune, d int) *node {
 }
 
 // Keys returns all the keys in the set.
-func (t Trie) Keys() []string {
+func (t *Trie) Keys() []string {
 	return t.KeysWithPrefix("")
 }
 

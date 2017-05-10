@@ -66,7 +66,7 @@ func (t *SymbolTable) put(x *sTNode, key []rune, value interface{}, d int) *sTNo
 }
 
 // Get returns the value associated with the given key.
-func (t SymbolTable) Get(key string) interface{} {
+func (t *SymbolTable) Get(key string) interface{} {
 	x := t.get(t.root, []rune(key), 0)
 	if x == nil {
 		return nil
@@ -74,7 +74,7 @@ func (t SymbolTable) Get(key string) interface{} {
 	return x.value
 }
 
-func (t SymbolTable) get(x *sTNode, key []rune, d int) *sTNode {
+func (t *SymbolTable) get(x *sTNode, key []rune, d int) *sTNode {
 	if x == nil {
 		return nil
 	}
@@ -117,25 +117,25 @@ func (t *SymbolTable) delete(x *sTNode, key []rune, d int) *sTNode {
 }
 
 // Contains returns true if the trie contains key and false otherwise.
-func (t SymbolTable) Contains(key string) bool {
+func (t *SymbolTable) Contains(key string) bool {
 	return t.Get(key) != nil
 }
 
 // IsEmpty returns true if trie is empty and false otherwise.
-func (t SymbolTable) IsEmpty() bool {
+func (t *SymbolTable) IsEmpty() bool {
 	return t.length == 0
 }
 
 // LongestPrefixOf returns the string in the symbol table that is the
 // longest prefix of query, or empty string, if no such string is found
 // in the trie.
-func (t SymbolTable) LongestPrefixOf(query string) string {
+func (t *SymbolTable) LongestPrefixOf(query string) string {
 	q := []rune(query)
 	length := t.longestPrefixOf(t.root, q, 0, 0)
 	return string(q[0:length])
 }
 
-func (t SymbolTable) longestPrefixOf(x *sTNode, query []rune, d, length int) int {
+func (t *SymbolTable) longestPrefixOf(x *sTNode, query []rune, d, length int) int {
 	if x == nil {
 		return length
 	}
@@ -150,14 +150,14 @@ func (t SymbolTable) longestPrefixOf(x *sTNode, query []rune, d, length int) int
 }
 
 // KeysWithPrefix returns all the keys in the trie that match prefix.
-func (t SymbolTable) KeysWithPrefix(prefix string) []string {
+func (t *SymbolTable) KeysWithPrefix(prefix string) []string {
 	results := new(stringQueue)
 	x := t.get(t.root, []rune(prefix), 0)
 	t.collect(x, []rune(prefix), results)
 	return results.slice()
 }
 
-func (t SymbolTable) collect(x *sTNode, prefix []rune, results *stringQueue) {
+func (t *SymbolTable) collect(x *sTNode, prefix []rune, results *stringQueue) {
 	if x == nil {
 		return
 	}
@@ -173,13 +173,13 @@ func (t SymbolTable) collect(x *sTNode, prefix []rune, results *stringQueue) {
 
 // KeysThatMatch all of the keys in the symbol table that match pattern,
 // where '.' symbol is treated as a wildcard character.
-func (t SymbolTable) KeysThatMatch(pattern string) []string {
+func (t *SymbolTable) KeysThatMatch(pattern string) []string {
 	results := new(stringQueue)
 	t.collectWildcard(t.root, []rune(""), []rune(pattern), results)
 	return results.slice()
 }
 
-func (t SymbolTable) collectWildcard(x *sTNode, prefix, pattern []rune, results *stringQueue) {
+func (t *SymbolTable) collectWildcard(x *sTNode, prefix, pattern []rune, results *stringQueue) {
 	if x == nil {
 		return
 	}
@@ -204,11 +204,11 @@ func (t SymbolTable) collectWildcard(x *sTNode, prefix, pattern []rune, results 
 }
 
 // Keys returns all the keys in the trie.
-func (t SymbolTable) Keys() []string {
+func (t *SymbolTable) Keys() []string {
 	return t.KeysWithPrefix("")
 }
 
 // Len returns the number of strings in the trie.
-func (t SymbolTable) Len() int {
+func (t *SymbolTable) Len() int {
 	return t.length
 }
