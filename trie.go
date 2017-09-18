@@ -139,7 +139,7 @@ func (t *Trie) collectWildcard(x *node, prefix, pattern []rune, results *stringQ
 			prefix = prefix[0 : len(prefix)-1]
 		}
 	} else {
-		prefix = append(prefix, rune(c))
+		prefix = append(prefix, c)
 		t.collectWildcard(x.next[c], prefix, pattern, results)
 	}
 }
